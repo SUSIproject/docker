@@ -1,0 +1,21 @@
+[submodule "components/susi-core"]
+	path = components/susi-core
+	url = https://github.com/SUSIproject/susi-core
+[submodule "components/susi-duktape"]
+	path = components/susi-duktape
+	url = https://github.com/SUSIproject/susi-duktape
+[submodule "components/susi-cluster"]
+	path = components/susi-cluster
+	url = https://github.com/SUSIproject/susi-cluster
+[submodule "components/susi-leveldb"]
+	path = components/susi-leveldb
+	url = https://github.com/SUSIproject/susi-leveldb
+[submodule "components/susi-mqtt"]
+	path = components/susi-mqtt
+	url = https://github.com/SUSIproject/susi-mqtt
+[submodule "components/susi-authenticator"]
+	path = components/susi-authenticator
+	url = https://github.com/SUSIproject/susi-authenticator
+[submodule "components/susi-shell"]
+	path = components/susi-shell
+	url = https://github.com/SUSIproject/susi-shell

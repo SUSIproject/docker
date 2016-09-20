@@ -1,0 +1,16 @@
+debs/libbson.deb
+debs/libsusi.deb
+debs/susi-authenticator.deb
+debs/susi-cluster.deb
+debs/susi-core.deb
+debs/susi-duktape.deb
+debs/susi-leveldb.deb
+debs/susi-mqtt.deb
+debs/susi-shell.deb
+containers/susi-authenticator/susi-authenticator.deb
+containers/susi-cluster/susi-cluster.deb
+containers/susi-core/susi-core.deb
+containers/susi-duktape/susi-duktape.deb
+containers/susi-leveldb/susi-leveldb.deb
+containers/susi-mqtt/susi-mqtt.deb
+containers/susi-shell/susi-shell.deb
