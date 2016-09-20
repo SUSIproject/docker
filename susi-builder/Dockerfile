@@ -1,4 +1,4 @@
-FROM debian:testing
+FROM debian:stable
 
 RUN apt-get -y update && apt-get -y install cmake \
   make \
