@@ -1,4 +1,6 @@
 sudo: required
+language: c++
+
 
 services:
   - docker
@@ -8,4 +10,4 @@ before_install:
 
 script:
   - docker build -t ${DOCKER_USERNAME}/susi-builder:${TRAVIS_BRANCH} susi-builder
-  - docker push ${DOCKER_USERNAME}/susi-builder:${TRAVIS_BRANCH}
+  - make -j4
