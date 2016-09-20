@@ -20,6 +20,7 @@ debs: debs/susi-authenticator.deb \
 	debs/susi-shell.deb
 
 debs/%.deb:
+	mkdir -p debs
 	docker run -v $(shell pwd)/components/$(shell basename $@ .deb):/src trusch/susi-builder:stable
 	cp components/$(shell basename $@ .deb)/build/*.deb debs/$(shell basename $@)
 
