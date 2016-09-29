@@ -1,4 +1,4 @@
-all: docker susi-builder
+all: docker build-susi-builder build-susi-arm-builder
 
 docker: docker/susi-authenticator \
 	docker/susi-cluster \
@@ -29,6 +29,10 @@ docker/%: debs/%.deb
 	docker build -t trusch/$(shell basename $@) containers/$(shell basename $@)
 	docker push trusch/$(shell basename $@)
 
-susi-builder:
+build-susi-builder:
 	docker build -t trusch/susi-builder:stable susi-builder
 	docker push trusch/susi-builder:stable
+
+build-susi-arm-builder:
+	docker build -t trusch/susi-arm-builder:stable susi-arm-builder
+	docker push trusch/susi-arm-builder:stable
