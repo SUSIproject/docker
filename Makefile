@@ -7,7 +7,8 @@ docker: docker-cpp/susi-authenticator \
 	docker-cpp/susi-leveldb \
 	docker-cpp/susi-mqtt \
 	docker-cpp/susi-shell \
-	docker-go/susi-mongodb
+	docker-go/github.com/SUSIproject/susi-mongodb \
+	docker-go/github.com/trusch/boltplus/susi-boltplus \
 
 
 debs: debs/susi-authenticator.deb \
@@ -31,7 +32,9 @@ docker-cpp/%: debs/%.deb
 	docker tag trusch/$(shell basename $@):$${TRAVIS_BRANCH:-latest} quay.io/trusch/$(shell basename $@):$${TRAVIS_BRANCH:-latest}
 
 docker-go/%:
-	go build -o containers/$(shell basename $@)/$(shell basename $@) ./components/susi-mongodb/
+	mkdir -p /tmp/gopath
+	GOPATH=/tmp/gopath go get -u -v $(shell echo $@ | cut -d/ -f 2-)
+	cp /tmp/gopath/bin/$(shell basename $@) containers/$(shell basename $@)/
 	docker build -t trusch/$(shell basename $@):$${TRAVIS_BRANCH:-latest} containers/$(shell basename $@)
 	docker tag trusch/$(shell basename $@):$${TRAVIS_BRANCH:-latest} quay.io/trusch/$(shell basename $@):$${TRAVIS_BRANCH:-latest}
 
