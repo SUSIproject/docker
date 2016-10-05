@@ -1,12 +1,13 @@
 all: docker build-susi-builder build-susi-arm-builder
 
-docker: docker/susi-authenticator \
-	docker/susi-cluster \
-	docker/susi-core \
-	docker/susi-duktape \
-	docker/susi-leveldb \
-	docker/susi-mqtt \
-	docker/susi-shell
+docker: docker-cpp/susi-authenticator \
+	docker-cpp/susi-cluster \
+	docker-cpp/susi-core \
+	docker-cpp/susi-duktape \
+	docker-cpp/susi-leveldb \
+	docker-cpp/susi-mqtt \
+	docker-cpp/susi-shell \
+	docker-go/susi-mongodb
 
 
 debs: debs/susi-authenticator.deb \
@@ -24,10 +25,38 @@ debs/%.deb:
 	docker run -v $(shell pwd)/components/$(shell basename $@ .deb):/src trusch/susi-builder:stable
 	cp components/$(shell basename $@ .deb)/build/*.deb debs/$(shell basename $@)
 
-docker/%: debs/%.deb
+docker-cpp/%: debs/%.deb
 	cp debs/$(shell basename $@).deb containers/$(shell basename $@)/
-	docker build -t trusch/$(shell basename $@) containers/$(shell basename $@)
-	docker push trusch/$(shell basename $@)
+	docker build -t trusch/$(shell basename $@):$${TRAVIS_BRANCH:-latest} containers/$(shell basename $@)
+	docker tag trusch/$(shell basename $@):$${TRAVIS_BRANCH:-latest} quay.io/trusch/$(shell basename $@):$${TRAVIS_BRANCH:-latest}
+
+docker-go/%:
+	go build -o containers/$(shell basename $@)/$(shell basename $@) ./components/susi-mongodb/
+	docker build -t trusch/$(shell basename $@):$${TRAVIS_BRANCH:-latest} containers/$(shell basename $@)
+	docker tag trusch/$(shell basename $@):$${TRAVIS_BRANCH:-latest} quay.io/trusch/$(shell basename $@):$${TRAVIS_BRANCH:-latest}
+
+push-dockerhub: docker
+	docker login -u=$${DOCKER_USERNAME} -p=$${DOCKER_PASSWORD}
+	docker push trusch/susi-authenticator
+	docker push trusch/susi-cluster
+	docker push trusch/susi-core
+	docker push trusch/susi-duktape
+	docker push trusch/susi-leveldb
+	docker push trusch/susi-mqtt
+	docker push trusch/susi-shell
+	docker push trusch/susi-mongodb
+
+push-quayio: docker
+	docker login -u=$${QUAYIO_USERNAME} -p=$${QUAYIO_PASSWORD} quay.io
+	docker push quay.io/trusch/susi-authenticator
+	docker push quay.io/trusch/susi-cluster
+	docker push quay.io/trusch/susi-core
+	docker push quay.io/trusch/susi-duktape
+	docker push quay.io/trusch/susi-leveldb
+	docker push quay.io/trusch/susi-mqtt
+	docker push quay.io/trusch/susi-shell
+	docker push quay.io/trusch/susi-mongodb
+
 
 build-susi-builder:
 	docker build -t trusch/susi-builder:stable susi-builder

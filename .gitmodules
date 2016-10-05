@@ -19,3 +19,6 @@
 [submodule "components/susi-shell"]
 	path = components/susi-shell
 	url = https://github.com/SUSIproject/susi-shell
+[submodule "components/susi-mongodb"]
+	path = components/susi-mongodb
+	url = https://github.com/SUSIproject/susi-mongodb
