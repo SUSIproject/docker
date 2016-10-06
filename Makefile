@@ -48,6 +48,7 @@ push-dockerhub: docker
 	docker push trusch/susi-mqtt
 	docker push trusch/susi-shell
 	docker push trusch/susi-mongodb
+	docker push trusch/susi-boltplus
 
 push-quayio: docker
 	docker login -u=$${QUAYIO_USERNAME} -p=$${QUAYIO_PASSWORD} quay.io
@@ -59,6 +60,7 @@ push-quayio: docker
 	docker push quay.io/trusch/susi-mqtt
 	docker push quay.io/trusch/susi-shell
 	docker push quay.io/trusch/susi-mongodb
+	docker push quay.io/trusch/susi-boltplus
 
 
 build-susi-builder:
